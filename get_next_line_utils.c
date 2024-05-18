@@ -6,7 +6,7 @@
 /*   By: nfujisak <nfujisak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 16:23:29 by nfujisak          #+#    #+#             */
-/*   Updated: 2024/05/18 17:08:09 by nfujisak         ###   ########.fr       */
+/*   Updated: 2024/05/18 18:11:06 by nfujisak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,33 @@ size_t	ft_strlen(const char *s)
 	return (count);
 }
 
+void	ft_bzero(void *s, size_t n)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < n)
+	{
+		((char *)s)[i] = '\0';
+		i++;
+	}
+}
+
+void	*ft_calloc(size_t count, size_t size)
+{
+	void	*ptr;
+
+	if (size != 0 && count > (SIZE_MAX / size))
+		return (NULL);
+	ptr = malloc(count * size);
+	if (ptr == NULL)
+	{
+		return (NULL);
+	}
+	ft_bzero(ptr, count * size);
+	return (ptr);
+}
+
 char	*ft_strjoin(char *stash, char *buffer) //should i add const here?
 {
 	char	*save;
@@ -31,12 +58,12 @@ char	*ft_strjoin(char *stash, char *buffer) //should i add const here?
 	if (!stash && !buffer)
 		return (NULL);
 	if (!stash)
-		stash = (char *)malloc(sizeof(char) * 1);
-	save = (char *)malloc(sizeof(char) * ft_strlen(stash) + ft_strlen(buffer) + 1);
+		stash = ft_calloc(1, sizeof(char));
+	save = ft_calloc(ft_strlen(stash) + ft_strlen(buffer) + 1, sizeof(char));
 	if (!save)
 		return (NULL);
 	i = -1;
-	while (stash[++i])
+	while (stash[++i]) //you are using calloc so that if you dont have a stash first, it has stash = 0 so it skips this loop
 		save[i] = stash[i];
 	j = -1;
 	while (buffer[++j])

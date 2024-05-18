@@ -6,7 +6,7 @@
 /*   By: nfujisak <nfujisak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 16:21:37 by nfujisak          #+#    #+#             */
-/*   Updated: 2024/05/18 18:02:51 by nfujisak         ###   ########.fr       */
+/*   Updated: 2024/05/18 19:00:42 by nfujisak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,29 @@ char	*handle_remains(char *stash, char *line)
 {
 	char	*remains;
 	int		i;
+	int		j;
 
 	i = 0;
+	remains = NULL; //what should the default value of remains be (when there are no remains) -> should be this because gnl is on a on-call basis
 	if (!line)
-		return(free(line), free(stash), NULL);
+		return(free(stash), NULL);
 	while (stash[i] && stash[i] != '\n')
 		i++;
+	j = i + 1;
 	if (stash[i] == '\n')
 	{
-		while (stash[i])
-			*remains++ = stash[i++]
+		while (stash[j])
+			j++;
+		remains = ft_calloc(j - i + 1, sizeof(char));
+		if (!remains)
+			return(free(stash), NULL); //preserve or not preserve previous stash is alloc fails? QUESTION
+		j = i + 1;
+		i = 0;
+		while (stash[j])
+			remains[i++] = stash[j++];
+		remains[i] = '\0';
 	}
+	return(free(stash), remains); // we can't free the line as we have to return it in the gnl after remains!
 }
 
 char	*fetch_line(char *stash)
@@ -37,7 +49,7 @@ char	*fetch_line(char *stash)
 	i = 0;
 	while (stash[i] && stash[i] != '\n')
 		i++;
-	line = (char *)malloc(sizeof(char) * (i + 2));
+	line = ft_calloc(i + 2, sizeof(char));
 	if (!line)
 		return (NULL); //where does this GO?
 	i = -1;
@@ -55,9 +67,9 @@ char	*read_file(int fd, char *stash)
 	int		chars_read;
 
 	chars_read = 1;
-	while (!check_newline(stash) && !chars_read) //if no new line or if not at EOF when reading
+	while (!newline_check(stash) && !chars_read) //if no new line or if not at EOF when reading
 	{
-		buffer = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1)); //allocating memory for buffer + the null to make it a string
+		buffer = ft_calloc(BUFFER_SIZE + 1, sizeof(char)); //allocating memory for buffer + the null to make it a string
 		if (!buffer)
 			return (NULL);
 		chars_read = (int)read(fd, buffer, BUFFER_SIZE);
