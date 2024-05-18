@@ -6,11 +6,16 @@
 /*   By: nfujisak <nfujisak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 16:21:37 by nfujisak          #+#    #+#             */
-/*   Updated: 2024/05/18 15:29:37 by nfujisak         ###   ########.fr       */
+/*   Updated: 2024/05/18 15:59:41 by nfujisak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
+char	*fetch_line()
+{
+	
+}
 
 char	*save_in_stash(int fd, char *stash)
 {
@@ -30,17 +35,28 @@ char	*save_in_stash(int fd, char *stash)
 		stash = ft_strjoin(stash, buffer);
 	} 
 	return (stash); //if there is a newline in stash, skip directly here
-}		
+}
+	
 char	*get_next_line(int fd)
 {
 	static char	*stash;
 	char		*save;
+	char		*line;
 
 	if (fd < 0 || BUFFER_SIZE < 0)
 		return (NULL);
 	save = save_in_stash(fd, stash);
-	if (!save)
+	if (!save) //we have to free the previously allocated stash in case of error, not just return null and leave stash to be
+	{
+		if (stash)
+			free (stash);
+		stash = NULL; //do we need this
 		return (NULL);
+	}
+	stash = save; //as strjoin has created a NEW stash!!
+	line = fetch_line(stash); //to print the line
+	save = handle_remains(stash, line); //update save to the remains
+	return (line); //gnl returns a string, doesnt print it
 }
 
 //read in chunks of buffer, append them and then search for new lines
