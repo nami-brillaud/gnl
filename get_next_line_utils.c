@@ -6,7 +6,7 @@
 /*   By: nfujisak <nfujisak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 16:23:29 by nfujisak          #+#    #+#             */
-/*   Updated: 2024/05/18 18:11:06 by nfujisak         ###   ########.fr       */
+/*   Updated: 2024/05/18 19:13:09 by nfujisak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	*ft_calloc(size_t count, size_t size)
 	return (ptr);
 }
 
-char	*ft_strjoin(char *stash, char *buffer) //should i add const here?
+char	*ft_strjoin(char *stash, char *buffer)
 {
 	char	*save;
 	int		i;
@@ -63,7 +63,7 @@ char	*ft_strjoin(char *stash, char *buffer) //should i add const here?
 	if (!save)
 		return (NULL);
 	i = -1;
-	while (stash[++i]) //you are using calloc so that if you dont have a stash first, it has stash = 0 so it skips this loop
+	while (stash[++i])
 		save[i] = stash[i];
 	j = -1;
 	while (buffer[++j])
@@ -79,43 +79,7 @@ char	*newline_check(char *stash)
 	{
 		if (*stash == '\n')
 			return (stash);
-		stash++; //doing this doesnt modify the original stash, as the pointer to stash is just a local copy
+		stash++;
 	}
 	return (NULL);
 }
-
-// char	*ft_strjoin(char const *s1, char const *s2) //YOU HAVE TO ADJUST THIS TO STASH!!
-// {
-// 	char	*str;
-// 	char	*initial_str;
-
-// 	if (!s1 || !s2)
-// 		return (NULL);
-// 	str = (char *)malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
-// 	if (!str)
-// 		return (NULL);
-// 	initial_str = str;
-// 	while (*s1)
-// 		*str++ = *s1++;
-// 	while (*s2)
-// 		*str++ = *s2++;
-// 	*str = '\0';
-// 	return (initial_str);
-// }
-
-// char	*ft_substr(char const *str, unsigned int start, size_t len) //you dont care about start > len because you will choose the value
-// {
-// 	char	*substr;
-// 	char	*reference;
-// 	size_t	i;
-
-// 	substr = (char *)malloc(sizeof(char) * (len + 1));
-// 	if (!substr)
-// 		return (NULL);
-// 	reference = (char *)str + start;
-// 	i = 0;
-// 	while (*reference && i < len)
-// 		substr[i++] = *reference++;
-// 	substr[i] = '\0';
-// 	return (substr);
-// }

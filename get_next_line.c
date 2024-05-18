@@ -6,7 +6,7 @@
 /*   By: nfujisak <nfujisak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 16:21:37 by nfujisak          #+#    #+#             */
-/*   Updated: 2024/05/18 19:00:42 by nfujisak         ###   ########.fr       */
+/*   Updated: 2024/05/18 19:12:32 by nfujisak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ char	*handle_remains(char *stash, char *line)
 	int		j;
 
 	i = 0;
-	remains = NULL; //what should the default value of remains be (when there are no remains) -> should be this because gnl is on a on-call basis
+	remains = NULL;
 	if (!line)
-		return(free(stash), NULL);
+		return (free(stash), NULL);
 	while (stash[i] && stash[i] != '\n')
 		i++;
 	j = i + 1;
@@ -31,14 +31,14 @@ char	*handle_remains(char *stash, char *line)
 			j++;
 		remains = ft_calloc(j - i + 1, sizeof(char));
 		if (!remains)
-			return(free(stash), NULL); //preserve or not preserve previous stash is alloc fails? QUESTION
+			return (free(stash), NULL); //preserve or not preserve previous stash is alloc fails?
 		j = i + 1;
 		i = 0;
 		while (stash[j])
 			remains[i++] = stash[j++];
 		remains[i] = '\0';
 	}
-	return(free(stash), remains); // we can't free the line as we have to return it in the gnl after remains!
+	return (free(stash), remains);
 }
 
 char	*fetch_line(char *stash)
@@ -67,20 +67,20 @@ char	*read_file(int fd, char *stash)
 	int		chars_read;
 
 	chars_read = 1;
-	while (!newline_check(stash) && !chars_read) //if no new line or if not at EOF when reading
+	while (!newline_check(stash) && !chars_read)
 	{
-		buffer = ft_calloc(BUFFER_SIZE + 1, sizeof(char)); //allocating memory for buffer + the null to make it a string
+		buffer = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
 		if (!buffer)
 			return (NULL);
 		chars_read = (int)read(fd, buffer, BUFFER_SIZE);
-		if ((!stash && chars_read == 0) || chars_read == -1) //return null only if stash is null and reading 0 bytes or if there is an error
+		if ((!stash && chars_read == 0) || chars_read == -1)
 			return (free(buffer), NULL);
-		buffer[chars_read] = '\0'; //if stash is not null but read finds an EOF, the buffer only contains a null char
+		buffer[chars_read] = '\0';
 		stash = ft_strjoin(stash, buffer);
-	} 
-	return (stash); //if there is a newline in stash or EOF at the beginning of read (ie just after)
+	}
+	return (stash);
 }
-	
+
 char	*get_next_line(int fd)
 {
 	static char	*stash;
@@ -90,17 +90,15 @@ char	*get_next_line(int fd)
 	if (fd < 0 || BUFFER_SIZE < 0)
 		return (NULL);
 	save = read_file(fd, stash);
-	if (!save) //we have to free the previously allocated stash in case of error, not just return null and leave stash to be
+	if (!save)
 	{
 		if (stash)
 			free(stash);
-		stash = NULL; //WHY DO WE NEED THIS
+		stash = NULL; //why do we need this
 		return (NULL);
 	}
-	stash = save; //as strjoin has created a NEW stash!!
-	line = fetch_line(stash); //to print the line. -> handle remains has to handle the NULL case.
-	stash = handle_remains(stash, line); //stash takes the value of remains, as its what's left to print!
+	stash = save;
+	line = fetch_line(stash);//what happens when line is NULL?
+	stash = handle_remains(stash, line);
 	return (line); //gnl returns a string, doesnt print it
 }
-
-//read in chunks of buffer, append them and then search for new lines
