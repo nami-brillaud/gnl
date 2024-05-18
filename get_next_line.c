@@ -6,18 +6,36 @@
 /*   By: nfujisak <nfujisak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 16:21:37 by nfujisak          #+#    #+#             */
-/*   Updated: 2024/05/18 16:20:23 by nfujisak         ###   ########.fr       */
+/*   Updated: 2024/05/18 17:07:29 by nfujisak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
+char	*handle_remains(char *stash, char *line)
+{
+	if (!line)
+		//return smtg and free everything (as line can be null in fetch_line)
+}
+
 char	*fetch_line(char *stash)
 {
 	char	*line;
-	int		len;
+	int		i;
 
-	while (*stash != '\n' || *stash != EOF) //include the n
+	i = 0;
+	while (stash[i] && stash[i] != '\n')
+		i++; //le i final atterit a \n or EOF
+	line = (char *)malloc(sizeof(char) * (i + 2));
+	if (!line)
+		return (NULL); //where does this GO?
+	i = -1;
+	while (stash[++i] && stash[i] != '\n')
+		line[i] = stash[i];
+	if (stash[i] == '\n')
+		line[i++] = '\n';
+	line[i] = '\0';
+	return (line);
 }
 
 char	*save_in_stash(int fd, char *stash)
@@ -57,7 +75,7 @@ char	*get_next_line(int fd)
 		return (NULL);
 	}
 	stash = save; //as strjoin has created a NEW stash!!
-	line = fetch_line(stash); //to print the line
+	line = fetch_line(stash); //to print the line. -> handle remains has to handle the NULL case.
 	save = handle_remains(stash, line); //update save to the remains
 	return (line); //gnl returns a string, doesnt print it
 }

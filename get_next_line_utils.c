@@ -6,7 +6,7 @@
 /*   By: nfujisak <nfujisak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 16:23:29 by nfujisak          #+#    #+#             */
-/*   Updated: 2024/05/18 16:20:14 by nfujisak         ###   ########.fr       */
+/*   Updated: 2024/05/18 17:08:09 by nfujisak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,4 +74,21 @@ char	*newline_check(char *stash)
 // 		*str++ = *s2++;
 // 	*str = '\0';
 // 	return (initial_str);
+// }
+
+// char	*ft_substr(char const *str, unsigned int start, size_t len) //you dont care about start > len because you will choose the value
+// {
+// 	char	*substr;
+// 	char	*reference;
+// 	size_t	i;
+
+// 	substr = (char *)malloc(sizeof(char) * (len + 1));
+// 	if (!substr)
+// 		return (NULL);
+// 	reference = (char *)str + start;
+// 	i = 0;
+// 	while (*reference && i < len)
+// 		substr[i++] = *reference++;
+// 	substr[i] = '\0';
+// 	return (substr);
 // }
