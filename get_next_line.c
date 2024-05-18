@@ -6,15 +6,18 @@
 /*   By: nfujisak <nfujisak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 16:21:37 by nfujisak          #+#    #+#             */
-/*   Updated: 2024/05/18 15:59:41 by nfujisak         ###   ########.fr       */
+/*   Updated: 2024/05/18 16:20:23 by nfujisak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*fetch_line()
+char	*fetch_line(char *stash)
 {
-	
+	char	*line;
+	int		len;
+
+	while (*stash != '\n' || *stash != EOF) //include the n
 }
 
 char	*save_in_stash(int fd, char *stash)
@@ -25,7 +28,7 @@ char	*save_in_stash(int fd, char *stash)
 	chars_read = 1;
 	while (!check_newline(stash) && !chars_read) //its a while because buffer size might be small compared to input. we have to continue until a newline is in stash
 	{
-		buffer = (char *)ft_calloc(BUFFER_SIZE + 1, sizeof(char)); //allocating memory for buffer + the null to make it a string
+		buffer = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1)); //allocating memory for buffer + the null to make it a string
 		if (!buffer)
 			return (NULL);
 		chars_read = (int)read(fd, buffer, BUFFER_SIZE);
