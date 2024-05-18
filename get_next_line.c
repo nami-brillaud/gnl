@@ -6,7 +6,7 @@
 /*   By: nfujisak <nfujisak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 16:21:37 by nfujisak          #+#    #+#             */
-/*   Updated: 2024/05/17 19:07:45 by nfujisak         ###   ########.fr       */
+/*   Updated: 2024/05/18 15:29:37 by nfujisak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,18 +18,18 @@ char	*save_in_stash(int fd, char *stash)
 	int		chars_read;
 
 	chars_read = 1;
-	if (!check_newline(stash) && !chars_read)
+	while (!check_newline(stash) && !chars_read) //its a while because buffer size might be small compared to input. we have to continue until a newline is in stash
 	{
 		buffer = (char *)ft_calloc(BUFFER_SIZE + 1, sizeof(char)); //allocating memory for buffer + the null to make it a string
 		if (!buffer)
 			return (NULL);
-		chars_read = read(fd, buffer, BUFFER_SIZE);
+		chars_read = (int)read(fd, buffer, BUFFER_SIZE);
 		if (chars_read == 0 || chars_read == -1) //nothing to read i.e. EOF or error - CHECK BACK ON THIS (dont understand yet)
 			return (free(buffer), NULL);
 		buffer[chars_read] = '\0';
 		stash = ft_strjoin(stash, buffer);
 	} 
-	return (NULL);
+	return (stash); //if there is a newline in stash, skip directly here
 }		
 char	*get_next_line(int fd)
 {

@@ -6,7 +6,7 @@
 /*   By: nfujisak <nfujisak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 16:23:29 by nfujisak          #+#    #+#             */
-/*   Updated: 2024/05/17 19:56:32 by nfujisak         ###   ########.fr       */
+/*   Updated: 2024/05/18 15:09:44 by nfujisak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,41 @@ void	*ft_calloc(size_t count, size_t size)
 	return (ptr);
 }
 
+char	*ft_strjoin(char *stash, char *buffer) //should i add const here?
+{
+	char	*save;
+	int		i;
+	int		j;
+
+	if (!stash && !buffer)
+		return (NULL);
+	if (!stash)
+		stash = ft_calloc(1, sizeof(char));
+	save = (char *)ft_calloc(ft_strlen(stash) + ft_strlen(buffer) + 1, sizeof(char));
+	if (!save)
+		return (NULL);
+	i = -1;
+	while (stash[++i])
+		save[i] = stash[i];
+	j = -1;
+	while (buffer[++j])
+		save[i++] = buffer[j];
+	save[i] = '\0';
+	printf("%s\n", "I'm here");
+	return (free(stash), free(buffer), save);
+}
+
+char	*newline_check(char *stash)
+{
+	while (*stash)
+	{
+		if (*stash == '\n')
+			return (stash);
+		stash++; //doing this doesnt modify the original stash, as the pointer to stash is just a local copy
+	}
+	return (NULL);
+}
+
 // char	*ft_strjoin(char const *s1, char const *s2) //YOU HAVE TO ADJUST THIS TO STASH!!
 // {
 // 	char	*str;
@@ -67,14 +102,3 @@ void	*ft_calloc(size_t count, size_t size)
 // 	*str = '\0';
 // 	return (initial_str);
 // }
-
-char	*newline_check(char *stash)
-{
-	while (*stash)
-	{
-		if (*stash == '\n')
-			return (stash);
-		stash++; //doing this doesnt modify the original stash, as the pointer to stash is just a local copy
-	}
-	return (NULL);
-}
