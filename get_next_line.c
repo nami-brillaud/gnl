@@ -6,7 +6,7 @@
 /*   By: nfujisak <nfujisak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 16:21:37 by nfujisak          #+#    #+#             */
-/*   Updated: 2024/05/28 17:23:48 by nfujisak         ###   ########.fr       */
+/*   Updated: 2024/05/28 17:26:58 by nfujisak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*handle_remains(char *stash, char *line)
 
 	if (!line)
 		return (free(stash), NULL);
-	i = ft_strlen(line); //includes the newline
+	i = ft_strlen(line);
 	if (!stash[i])
 		return (free(stash), NULL);
 	j = 0;
@@ -28,7 +28,7 @@ char	*handle_remains(char *stash, char *line)
 		j++;
 	remains = ft_calloc(j + 1, sizeof(char));
 	if (!remains)
-		return (free(stash), NULL); //why no freeing here
+		return (free(stash), NULL);
 	j = 0;
 	i = ft_strlen(line);
 	while (stash[i])
@@ -47,7 +47,7 @@ char	*fetch_line(char *stash)
 		i++;
 	line = ft_calloc(i + 2, sizeof(char));
 	if (!line)
-		return (NULL); //where does this GO?
+		return (NULL);
 	i = -1;
 	while (stash[++i] && stash[i] != '\n')
 		line[i] = stash[i];
@@ -90,13 +90,13 @@ char	*get_next_line(int fd)
 	{
 		if (stash)
 			free(stash);
-		stash = NULL; //why do we need this
+		stash = NULL;
 		return (NULL);
 	}
 	stash = save;
-	line = fetch_line(stash);//what happens when line is NULL?
+	line = fetch_line(stash);
 	stash = handle_remains(stash, line);
-	return (line); //gnl returns a string, doesnt print it
+	return (line);
 }
 
 // #include <stdio.h>
