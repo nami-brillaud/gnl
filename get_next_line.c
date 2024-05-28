@@ -6,7 +6,7 @@
 /*   By: nfujisak <nfujisak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 16:21:37 by nfujisak          #+#    #+#             */
-/*   Updated: 2024/05/18 19:12:32 by nfujisak         ###   ########.fr       */
+/*   Updated: 2024/05/28 16:12:28 by nfujisak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ char	*read_file(int fd, char *stash)
 	int		chars_read;
 
 	chars_read = 1;
-	while (!newline_check(stash) && !chars_read)
+	while (!newline_check(stash) && chars_read != 0)
 	{
 		buffer = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
 		if (!buffer)
@@ -87,7 +87,7 @@ char	*get_next_line(int fd)
 	char		*save;
 	char		*line;
 
-	if (fd < 0 || BUFFER_SIZE < 0)
+	if (fd < 0 || BUFFER_SIZE < 0 || fd > OPEN_MAX)
 		return (NULL);
 	save = read_file(fd, stash);
 	if (!save)
@@ -102,3 +102,40 @@ char	*get_next_line(int fd)
 	stash = handle_remains(stash, line);
 	return (line); //gnl returns a string, doesnt print it
 }
+
+// #include <stdio.h>
+// #include <fcntl.h>
+
+// __attribute__((destructor))
+// static void destructor() {
+//     system("leaks -q a.out");
+// }
+
+// int main(void)
+// {
+// 	int     fd;
+// 	char    *next_line;
+// 	int     count;
+
+// 	count = 0;
+// 	fd = open("lines.txt", O_RDONLY);
+// 	if (fd == -1)
+// 	{
+// 		printf("%s", "Error opening file");
+// 		return (1);
+// 	}
+// 	while (1)
+// 	{
+// 		next_line = get_next_line(fd);
+// 		if (next_line == NULL)
+// 		{
+// 			break;
+// 		}
+// 		count++;
+// 		printf("[%d]:%s\n", count, next_line);
+// 		free(next_line);
+// 		next_line = NULL;
+// 	}
+// 	close(fd);
+// 	return (0);
+// }

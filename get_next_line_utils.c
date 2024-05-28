@@ -6,7 +6,7 @@
 /*   By: nfujisak <nfujisak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 16:23:29 by nfujisak          #+#    #+#             */
-/*   Updated: 2024/05/18 19:13:09 by nfujisak         ###   ########.fr       */
+/*   Updated: 2024/05/28 16:01:13 by nfujisak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,12 +69,13 @@ char	*ft_strjoin(char *stash, char *buffer)
 	while (buffer[++j])
 		save[i++] = buffer[j];
 	save[i] = '\0';
-	printf("%s\n", "I'm here");
 	return (free(stash), free(buffer), save);
 }
 
 char	*newline_check(char *stash)
 {
+	if (!stash)
+		return (NULL);
 	while (*stash)
 	{
 		if (*stash == '\n')

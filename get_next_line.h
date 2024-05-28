@@ -6,7 +6,7 @@
 /*   By: nfujisak <nfujisak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 16:23:26 by nfujisak          #+#    #+#             */
-/*   Updated: 2024/05/18 19:08:08 by nfujisak         ###   ########.fr       */
+/*   Updated: 2024/05/28 16:05:38 by nfujisak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <unistd.h>
 # include <stdlib.h>
+# include <limits.h>
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 42
@@ -31,5 +32,6 @@ size_t	ft_strlen(const char *s);
 void	ft_bzero(void *s, size_t n);
 void	*ft_calloc(size_t count, size_t size);
 char	*ft_strjoin(char *stash, char *buffer);
+char	*newline_check(char *stash);
 
 #endif
