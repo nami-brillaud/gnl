@@ -6,7 +6,7 @@
 /*   By: nfujisak <nfujisak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 16:23:29 by nfujisak          #+#    #+#             */
-/*   Updated: 2024/05/28 17:24:56 by nfujisak         ###   ########.fr       */
+/*   Updated: 2024/05/28 19:21:47 by nfujisak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,11 @@ char	*ft_strjoin(char *stash, char *buffer)
 		return (NULL);
 	if (!stash)
 		stash = ft_calloc(1, sizeof(char));
+	if (!stash)
+		return (free(buffer), NULL);
 	save = ft_calloc(ft_strlen(stash) + ft_strlen(buffer) + 1, sizeof(char));
 	if (!save)
-		return (NULL);
+		return (free(stash), free(buffer), NULL);
 	i = -1;
 	while (stash[++i])
 		save[i] = stash[i];
