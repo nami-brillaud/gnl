@@ -6,7 +6,7 @@
 /*   By: nfujisak <nfujisak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 16:21:37 by nfujisak          #+#    #+#             */
-/*   Updated: 2024/05/28 17:26:58 by nfujisak         ###   ########.fr       */
+/*   Updated: 2024/05/28 17:37:23 by nfujisak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,10 +102,10 @@ char	*get_next_line(int fd)
 // #include <stdio.h>
 // #include <fcntl.h>
 
-// // __attribute__((destructor))
-// // static void destructor() {
-// //     system("leaks -q a.out");
-// // }
+// __attribute__((destructor))
+// static void destructor() {
+//     system("leaks -q a.out");
+// }
 
 // int main(void)
 // {
@@ -114,7 +114,7 @@ char	*get_next_line(int fd)
 // 	int     count;
 
 // 	count = 0;
-// 	fd = open("lines.txt", O_RDONLY);
+// 	fd = open("basic.txt", O_RDONLY);
 // 	printf("fd equals %d\n", fd);
 // 	if (fd == -1)
 // 	{
@@ -129,7 +129,7 @@ char	*get_next_line(int fd)
 // 			break;
 // 		}
 // 		count++;
-// 		printf("[%d]:%s\n", count, next_line);
+// 		printf("[%d]:%s", count, next_line);
 // 		free(next_line);
 // 		next_line = NULL;
 // 	}
