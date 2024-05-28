@@ -6,7 +6,7 @@
 /*   By: nfujisak <nfujisak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 16:21:37 by nfujisak          #+#    #+#             */
-/*   Updated: 2024/05/28 16:12:28 by nfujisak         ###   ########.fr       */
+/*   Updated: 2024/05/28 17:23:48 by nfujisak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,26 +18,22 @@ char	*handle_remains(char *stash, char *line)
 	int		i;
 	int		j;
 
-	i = 0;
-	remains = NULL;
 	if (!line)
 		return (free(stash), NULL);
-	while (stash[i] && stash[i] != '\n')
-		i++;
-	j = i + 1;
-	if (stash[i] == '\n')
-	{
-		while (stash[j])
-			j++;
-		remains = ft_calloc(j - i + 1, sizeof(char));
-		if (!remains)
-			return (free(stash), NULL); //preserve or not preserve previous stash is alloc fails?
-		j = i + 1;
-		i = 0;
-		while (stash[j])
-			remains[i++] = stash[j++];
-		remains[i] = '\0';
-	}
+	i = ft_strlen(line); //includes the newline
+	if (!stash[i])
+		return (free(stash), NULL);
+	j = 0;
+	while (stash[i++])
+		j++;
+	remains = ft_calloc(j + 1, sizeof(char));
+	if (!remains)
+		return (free(stash), NULL); //why no freeing here
+	j = 0;
+	i = ft_strlen(line);
+	while (stash[i])
+		remains[j++] = stash[i++];
+	remains[j] = '\0';
 	return (free(stash), remains);
 }
 
@@ -106,10 +102,10 @@ char	*get_next_line(int fd)
 // #include <stdio.h>
 // #include <fcntl.h>
 
-// __attribute__((destructor))
-// static void destructor() {
-//     system("leaks -q a.out");
-// }
+// // __attribute__((destructor))
+// // static void destructor() {
+// //     system("leaks -q a.out");
+// // }
 
 // int main(void)
 // {
@@ -119,6 +115,7 @@ char	*get_next_line(int fd)
 
 // 	count = 0;
 // 	fd = open("lines.txt", O_RDONLY);
+// 	printf("fd equals %d\n", fd);
 // 	if (fd == -1)
 // 	{
 // 		printf("%s", "Error opening file");

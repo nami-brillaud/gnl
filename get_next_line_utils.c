@@ -6,7 +6,7 @@
 /*   By: nfujisak <nfujisak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 16:23:29 by nfujisak          #+#    #+#             */
-/*   Updated: 2024/05/28 16:01:13 by nfujisak         ###   ########.fr       */
+/*   Updated: 2024/05/28 17:24:56 by nfujisak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,7 @@ void	*ft_calloc(size_t count, size_t size)
 		return (NULL);
 	ptr = malloc(count * size);
 	if (ptr == NULL)
-	{
 		return (NULL);
-	}
 	ft_bzero(ptr, count * size);
 	return (ptr);
 }
@@ -74,13 +72,16 @@ char	*ft_strjoin(char *stash, char *buffer)
 
 char	*newline_check(char *stash)
 {
+	int	i;
+
+	i = 0;
 	if (!stash)
 		return (NULL);
-	while (*stash)
+	while (stash[i])
 	{
-		if (*stash == '\n')
-			return (stash);
-		stash++;
+		if (stash[i] == '\n')
+			return (&stash[i]);
+		i++;
 	}
 	return (NULL);
 }
